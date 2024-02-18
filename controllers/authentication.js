@@ -7,19 +7,21 @@ const login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.sendStatus(400);
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
     }
 
     const user = await getUserByEmail(email).select("+salt +password");
 
     if (!user) {
-      return res.sendStatus(400);
+      return res.status(404).json({ message: "User not found" });
     }
 
     const expectedHash = authentication(user.salt, password);
 
-    if (user.password != expectedHash) {
-      return res.sendStatus(403);
+    if (user.password !== expectedHash) {
+      return res.status(403).json({ message: "Invalid password" });
     }
 
     const salt = random();
@@ -36,8 +38,8 @@ const login = async (req, res) => {
 
     return res.status(200).json(user).end();
   } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
+    console.error(error);
+    return res.status(500).json({ message: "Server Error" });
   }
 };
 
@@ -46,13 +48,15 @@ const register = async (req, res) => {
     const { email, password, username } = req.body;
 
     if (!email || !password || !username) {
-      return res.sendStatus(400);
+      return res
+        .status(400)
+        .json({ message: "Email, password, and username are required" });
     }
 
     const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
-      return res.sendStatus(400);
+      return res.status(400).json({ message: "User already exists" });
     }
 
     const salt = random();
@@ -65,12 +69,12 @@ const register = async (req, res) => {
 
     return res.status(200).json(user).end();
   } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
+    console.error(error);
+    return res.status(500).json({ message: "Server Error" });
   }
 };
 
 module.exports = {
-    login,
-    register
-}
+  login,
+  register,
+};

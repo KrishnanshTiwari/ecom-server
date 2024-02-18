@@ -1,10 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const compression = require('compression');
-const router  = require('./routes/index');
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const compression = require("compression");
+const router = require("./routes/index");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -18,9 +18,8 @@ app.use(express.json());
 app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
-
 // router
-app.use('/', router());
+app.use("/", router());
 
 // Define a simple route
 app.get("/", (req, res) => {

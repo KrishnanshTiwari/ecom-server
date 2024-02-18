@@ -7,6 +7,7 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true, select: false },
   salt: { type: String, select: false },
   sessionToken: { type: String, select: false },
+  isSeller: { type: Boolean, default: false },
 });
 
 const UserModel = mongoose.model("User", UserSchema);
@@ -17,5 +18,5 @@ module.exports = {
   getUserBySessionToken: (sessionToken) =>
     UserModel.findOne({ sessionToken: sessionToken }),
   createUser: (values) =>
-    new UserModel(values).save().then((user) => user.toObject())
+    new UserModel(values).save().then((user) => user.toObject()),
 };

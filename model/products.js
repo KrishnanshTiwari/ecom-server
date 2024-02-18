@@ -6,10 +6,16 @@ const ProductSchema = new mongoose.Schema({
   price: { type: String, required: true },
   image: { type: String, required: true },
   description: { type: String, required: true },
-  sellerId: { type: String, required: true },
+  sellerMail: { type: String, required: true },
   sellerName: { type: String, required: true },
   category: { type: String, required: true },
-  rating: { type: Number, required: false },
+  rating: {
+    type: Number,
+    required: false,
+    default: function () {
+      return Math.random() + 4; // Generate a random number between 4 and 5
+    },
+  },
 });
 
 const ProductModel = mongoose.model("products", ProductSchema);
@@ -21,5 +27,5 @@ module.exports = {
   deleteProductById: (id) => ProductModel.findOneAndDelete({ _id: id }),
   createProduct: (value) =>
     new ProductModel(value).save().then((user) => user.toObject()),
-  getproductsBySellerId: (id) => ProductModel.find({ sellerId: id }),
+  getproductsBysellerMail: (mail) => ProductModel.find({ sellerMail: mail }),
 };

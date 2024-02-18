@@ -3,7 +3,7 @@ const {
   createProduct,
   getProductById,
   deleteProductById,
-  getproductsBySellerId,
+  getproductsBysellerMail,
   getProducts,
 } = require("../model/products");
 
@@ -56,18 +56,26 @@ const deleteProduct = async (req, res) => {
 
 const addProduct = async (req, res) => {
   try {
-    const { title, price, image, description, sellerId, sellerName, category } =
-      req.body;
-    if (!title) {
-      return res.status(400).json({ msg: "Title is required" });
+    const { title, price, image, description, category } = req.body;
+    const { email, username } = req.user;
+    if (
+      !title ||
+      !price ||
+      !image ||
+      !description ||
+      !email ||
+      !username ||
+      !category
+    ) {
+      return res.status(400).json({ msg: "All fields are required" });
     }
     const createdProduct = await createProduct({
       title,
       price,
       image,
       description,
-      sellerId,
-      sellerName,
+      sellerMail: email,
+      sellerName: username,
       category,
     });
     return res.status(201).json(createdProduct);
@@ -79,8 +87,8 @@ const addProduct = async (req, res) => {
 
 const getProductsOfSeller = async (req, res) => {
   try {
-    const { id } = req.params;
-    const products = await getproductsBySellerId(id);
+    const { email } = req.user;
+    const products = await getproductsBysellerMail(email);
     return res.status(200).json(products);
   } catch (err) {
     console.error(err.message);
