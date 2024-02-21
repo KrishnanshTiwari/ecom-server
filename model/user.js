@@ -19,4 +19,8 @@ module.exports = {
     UserModel.findOne({ sessionToken: sessionToken }),
   createUser: (values) =>
     new UserModel(values).save().then((user) => user.toObject()),
+  editUser: (email, updates) =>
+    UserModel.findOneAndUpdate({ email }, updates, { new: true }).then((user) =>
+      user.toObject()
+    ),
 };

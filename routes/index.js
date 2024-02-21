@@ -5,6 +5,7 @@ const products = require("./products.js");
 const seller = require("./seller.js");
 const order = require('./orders.js');
 const cart  = require("./cart.js");
+const user = require('./user.js');
 const router = express.Router();
 
 module.exports = () => {
@@ -13,5 +14,6 @@ module.exports = () => {
   seller(router);
   order(router);
   cart(router);
+  user(router);
   return router;
 };

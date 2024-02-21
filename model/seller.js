@@ -15,4 +15,9 @@ module.exports = {
   SellerModel: SellerModel,
   createseller: (values) =>
     new SellerModel(values).save().then((user) => user.toObject()),
+  getSellerByEmail: (email) => SellerModel.findOne({ email }),
+  editSeller: (email, updates) =>
+  SellerModel.findOneAndUpdate({ email }, updates, { new: true }).then((user) =>
+      user.toObject()
+    ),
 };
