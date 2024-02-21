@@ -11,15 +11,7 @@ const getAllProducts = async (req, res) => {
   try {
     const products = await getProducts();
 
-    const simplifiedProducts = products.map((product) => ({
-      title: product.title,
-      image: product.image,
-      price: product.price,
-      category: product.category,
-      rating: product.rating,
-    }));
-
-    return res.status(200).json(simplifiedProducts);
+    return res.status(200).json(products);
   } catch (err) {
     console.error(err.message);
     return res.status(500).send("Server Error");
