@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const ProductSchema = new mongoose.Schema({
   title: { type: String, required: true },
   price: { type: String, required: true },
-  image: { type: String, required: true },
+  image: { type: Buffer, required: true },
   description: { type: String, required: true },
   sellerMail: { type: String, required: true },
   sellerName: { type: String, required: true },
@@ -13,7 +13,7 @@ const ProductSchema = new mongoose.Schema({
     type: Number,
     required: false,
     default: function () {
-      return Math.random() + 4; // Generate a random number between 4 and 5
+      return parseFloat((Math.random() + 4).toFixed(1)); 
     },
   },
 });

@@ -11,7 +11,13 @@ const getAllProducts = async (req, res) => {
   try {
     const products = await getProducts();
 
-    return res.status(200).json(products);
+    const productsWithImages = products.map(product => {
+      const imageData = product.image.toString('base64');
+      const imageSrc = `data:image/jpeg;base64,${imageData}`;
+      return { ...product.toObject(), imageSrc };
+    });
+
+    return res.status(200).json(productsWithImages);
   } catch (err) {
     console.error(err.message);
     return res.status(500).send("Server Error");
@@ -25,7 +31,14 @@ const getProduct = async (req, res) => {
     if (!product) {
       return res.status(404).json({ msg: "Product not found" });
     }
-    return res.status(200).json(product);
+    
+    const imageData = product.image.toString('base64');
+
+    const imageSrc = `data:image/jpeg;base64,${imageData}`;
+
+    const productWithImage = { ...product.toObject(), imageSrc };
+
+    return res.status(200).json(productWithImage);
   } catch (err) {
     console.error(err.message);
     return res.status(500).send("Server Error");
@@ -61,10 +74,13 @@ const addProduct = async (req, res) => {
     ) {
       return res.status(400).json({ msg: "All fields are required" });
     }
+
+    const imageData = Buffer.from(image, 'base64');
+
     const createdProduct = await createProduct({
       title,
       price,
-      image,
+      image: imageData,
       description,
       sellerMail: email,
       sellerName: username,
@@ -81,7 +97,14 @@ const getProductsOfSeller = async (req, res) => {
   try {
     const { email } = req.user;
     const products = await getproductsBysellerMail(email);
-    return res.status(200).json(products);
+
+    const productsWithImages = products.map(product => {
+      const imageData = product.image.toString('base64');
+      const imageSrc = `data:image/jpeg;base64,${imageData}`;
+      return { ...product.toObject(), imageSrc };
+    });
+
+    return res.status(200).json(productsWithImages);
   } catch (err) {
     console.error(err.message);
     return res.status(500).send("Server Error");
