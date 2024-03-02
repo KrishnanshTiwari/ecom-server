@@ -3,7 +3,7 @@ const { getSellerByEmail } = require("../model/seller");
 
 const getDetails = async (req, res) => {
   try {
-    const { email, username, isSeller } = req.user;
+    const { email, username, isSeller,phone } = req.user;
     let sellerDetails = {};
 
     if (isSeller) {
@@ -12,12 +12,13 @@ const getDetails = async (req, res) => {
     const userInfo = {
       email,
       username,
+      phone,
       isSeller,
       ...(isSeller && sellerDetails
         ? {
             gst: sellerDetails.gst,
             bank: sellerDetails.bank,
-            phone: sellerDetails.phone,
+            account: sellerDetails.account,
             ifsc: sellerDetails.ifsc,
           }
         : {}),

@@ -45,12 +45,12 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
   try {
-    const { email, password, username } = req.body;
+    const { email, password, username, phone } = req.body;
 
-    if (!email || !password || !username) {
+    if (!email || !password || !username || !phone) {
       return res
         .status(400)
-        .json({ message: "Email, password, and username are required" });
+        .json({ message: "Email, password, phone, and username are required" });
     }
 
     const existingUser = await getUserByEmail(email);
@@ -63,6 +63,7 @@ const register = async (req, res) => {
     const user = await createUser({
       email,
       username,
+      phone,
       salt,
       password: authentication(salt, password),
     });

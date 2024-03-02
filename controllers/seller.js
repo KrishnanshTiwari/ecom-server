@@ -4,12 +4,12 @@ const { createseller } = require("../model/seller");
 
 const addtosellers = async (req, res) => {
   try {
-    const { gst, bank, ifsc, phone } = req.body;
+    const { gst, bank, ifsc, account } = req.body;
     if (
       !gst ||
       !bank ||
       !ifsc ||
-      !phone 
+      !account 
     ) {
       return res.status(400).json({ msg: "All fields are required" });
     }
@@ -27,7 +27,7 @@ const addtosellers = async (req, res) => {
       gst,
       email,
       bank,
-      phone,
+      account,
       ifsc,
     });
 

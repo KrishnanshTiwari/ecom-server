@@ -5,7 +5,7 @@ const SellerSchema = new mongoose.Schema({
   gst: { type: String, required: true },
   email: { type: String, required: true },
   bank: { type: String, required: true },
-  phone: { type: String, required: true },
+  account: { type: String, required: true },
   ifsc: { type: String, required: true },
 });
 
