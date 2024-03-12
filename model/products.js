@@ -9,6 +9,7 @@ const ProductSchema = new mongoose.Schema({
   sellerMail: { type: String, required: true },
   sellerName: { type: String, required: true },
   category: { type: String, required: true },
+  order : {type : Number, required : false, default : 0},
   rating: {
     type: Number,
     required: false,
@@ -28,4 +29,8 @@ module.exports = {
   createProduct: (value) =>
     new ProductModel(value).save().then((user) => user.toObject()),
   getproductsBysellerMail: (mail) => ProductModel.find({ sellerMail: mail }),
+  editOrder: (id, updates) =>
+  ProductModel.findOneAndUpdate({ _id: id }, updates, { new: true }).then((user) =>
+      user.toObject()
+    ),
 };

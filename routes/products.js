@@ -4,6 +4,7 @@ const {
   deleteProduct,
   addProduct,
   getProductsOfSeller,
+  getOrderedProductsofSeller,
 } = require("../controllers/products");
 const { isAuthenticated, isSeller } = require("../middlewares/index");
 
@@ -22,6 +23,12 @@ const routes = (router) => {
     isAuthenticated,
     isSeller,
     getProductsOfSeller
+  );
+  router.get(
+    "/seller/sellerorderedproduct",
+    isAuthenticated,
+    isSeller,
+    getOrderedProductsofSeller
   );
 };
 

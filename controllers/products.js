@@ -110,11 +110,33 @@ const getProductsOfSeller = async (req, res) => {
     return res.status(500).send("Server Error");
   }
 };
-
+const getOrderedProductsofSeller = async (req,res) => {
+  try {
+    const { email } = req.user;
+    const products = await getproductsBysellerMail(email);
+    const productsWithImages = products.map(product => {
+      const imageData = product.image.toString('base64');
+      const imageSrc = `data:image/jpeg;base64,${imageData}`;
+      return { ...product.toObject(), imageSrc };
+    });
+    const OrderedProducts = [];
+    for (const product of productsWithImages) {
+      const { order } = product;
+      if(order > 0){
+        OrderedProducts.push(product);
+      }
+    }
+    return res.status(200).json(OrderedProducts);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send("Server Error");
+  }
+};
 module.exports = {
   getAllProducts,
   getProduct,
   deleteProduct,
   addProduct,
   getProductsOfSeller,
+  getOrderedProductsofSeller,
 };
