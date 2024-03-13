@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const cors = require('cors');
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const compression = require("compression");
@@ -14,6 +15,8 @@ const mongoURI = process.env.mongoURI;
 const PORT = process.env.PORT || 3000;
 
 // Middleware
+app.use(cors());
+
 app.use(express.json());
 app.use(compression());
 app.use(cookieParser());
