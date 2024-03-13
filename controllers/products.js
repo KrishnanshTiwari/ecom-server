@@ -75,12 +75,10 @@ const addProduct = async (req, res) => {
       return res.status(400).json({ msg: "All fields are required" });
     }
 
-    const imageData = Buffer.from(image, 'base64');
-
     const createdProduct = await createProduct({
       title,
       price,
-      image: imageData,
+      image,
       description,
       sellerMail: email,
       sellerName: username,
@@ -98,13 +96,7 @@ const getProductsOfSeller = async (req, res) => {
     const { email } = req.user;
     const products = await getproductsBysellerMail(email);
 
-    const productsWithImages = products.map(product => {
-      const imageData = product.image.toString('base64');
-      const imageSrc = `data:image/jpeg;base64,${imageData}`;
-      return { ...product.toObject(), imageSrc };
-    });
-
-    return res.status(200).json(productsWithImages);
+    return res.status(200).json(products);
   } catch (err) {
     console.error(err.message);
     return res.status(500).send("Server Error");
