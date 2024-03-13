@@ -1,6 +1,6 @@
 const express = require("express");
 const { getUserByEmail } = require("../model/user");
-const { createseller } = require("../model/seller");
+const { createseller, editSeller } = require("../model/seller");
 
 const addtosellers = async (req, res) => {
   try {
