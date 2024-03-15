@@ -13,7 +13,7 @@ const CartModel = mongoose.model("Cart", CartSchema);
 
 module.exports = {
   CartModel,
-  getcart: () => CartModel.find(),
+  getcart: (mail) => CartModel.find({usermail : mail}),
   addCart: (values) =>
     new CartModel(values).save().then((user) => user.toObject()),
   deleteCartById: (id) => CartModel.findOneAndDelete({ _id: id }),

@@ -38,7 +38,7 @@ const deleteCart = async (req,res) => {
 const getAllCarts = async (req,res) => {
     try{
         const { email } = req.user;
-        const carts = await getcart();
+        const carts = await getcart(email);
         return res.status(200).json(carts);
     }catch (error) {
         console.error(error);

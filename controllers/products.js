@@ -31,14 +31,8 @@ const getProduct = async (req, res) => {
     if (!product) {
       return res.status(404).json({ msg: "Product not found" });
     }
-    
-    const imageData = product.image.toString('base64');
 
-    const imageSrc = `data:image/jpeg;base64,${imageData}`;
-
-    const productWithImage = { ...product.toObject(), imageSrc };
-
-    return res.status(200).json(productWithImage);
+    return res.status(200).json(product);
   } catch (err) {
     console.error(err.message);
     return res.status(500).send("Server Error");
