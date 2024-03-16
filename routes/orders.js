@@ -7,7 +7,7 @@ const {
 const { isAuthenticated } = require("../middlewares/index");
 
 const routes = (router) => {
-  router.post("/user/addtoorders/:id",isAuthenticated, createOrder);
+  router.post("/user/addtoorders",isAuthenticated, createOrder);
   router.get("/user/getorders",isAuthenticated, getAllOrders);
 };
 

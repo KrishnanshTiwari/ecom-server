@@ -2,12 +2,12 @@ const express = require('express');
 
 const {getorders, addOrder } = require('../model/order');
 const {editOrder}  = require('../model/products');
+const {deleteCartByUsermail} = require('../model/cart');
 
 const createOrder = async (req, res) => {
     try {
       const { email } = req.user;
       const { products, total, cost, payment } = req.body;
-
       if (!email || !products || !total || !cost || !payment) {
         return res.status(400).json("Invalid input data");
       }
@@ -17,6 +17,7 @@ const createOrder = async (req, res) => {
       }
   
       const currentDate = new Date().toISOString();
+      await deleteCartByUsermail(email);
       const createdOrder = await addOrder({
         email,
         products,

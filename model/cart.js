@@ -17,4 +17,5 @@ module.exports = {
   addCart: (values) =>
     new CartModel(values).save().then((user) => user.toObject()),
   deleteCartById: (id) => CartModel.findOneAndDelete({ _id: id }),
+  deleteCartByUsermail: (mail) => CartModel.deleteMany({ usermail: mail }),
 };
