@@ -15,6 +15,12 @@ const OrderSchema = new mongoose.Schema({
   total: { type: Number, required: true },
   cost: { type: Number, required: true },
   payment: { type: String, required: true },
+  shipping : {
+    address: { type: String, required: true },
+    city: { type: String, required: true },
+    zip: { type: String, required: true },
+    state: { type: String, required: true },
+  }
 });
 
 const OrderModel = mongoose.model("orders", OrderSchema);
@@ -24,6 +30,4 @@ module.exports = {
   getorders: (mail) => OrderModel.find({ email: mail }),
   addOrder: (values) =>
   new OrderModel(values).save().then((order) => order.toObject()),
-
-
 };
